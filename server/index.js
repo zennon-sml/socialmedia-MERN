@@ -45,6 +45,7 @@ app.use("/auth", authRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
+console.log(process.env.MONGO_URL)
 mongoose.connect(process.env.MONGO_URL, {})
     .then(() => {
         app.listen(PORT, () => console.log(`server PORT: ${PORT}`))
