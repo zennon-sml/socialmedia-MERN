@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
+import mongoose from "mongoose";
 
 /* REGISTER USER */
 export const register = async (req, res) => {
@@ -60,4 +61,13 @@ export const login = async (req, res) => {
             error: err.message
         })
     }
+}
+
+export const getUsers = async (req, res) => {
+    try {
+        const users = await User.find({});
+        res.status(200).json(users)
+      } catch (err) {
+        console.error('Error retrieving items:', err);
+      }
 }

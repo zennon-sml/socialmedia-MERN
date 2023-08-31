@@ -8,7 +8,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import { register } from "./controllers/auth.js";
+import { getUsers, register} from "./controllers/auth.js";
 import authRoutes from "./routes/auth.js";
 
 /* CONFIGURATIONs */
@@ -42,11 +42,10 @@ app.post("/auth/register", upload.single("picture"), register);
 
 /* ROUTES */
 app.use("/auth", authRoutes);
-
+app.use("/users", getUsers);
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
-console.log(process.env.MONGO_URL)
-mongoose.connect(process.env.MONGO_URL, {})
+mongoose.connect(process.env.MONGO_URLocal, {})
     .then(() => {
         app.listen(PORT, () => console.log(`server PORT: ${PORT}`))
     })
