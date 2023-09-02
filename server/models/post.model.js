@@ -12,7 +12,7 @@ const postSchema = mongoose.Schema(
         },
         lastName: {
             type: String,
-            required: true,
+            default: "dft lastName",
         },
         location: String,
         description: String,

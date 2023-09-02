@@ -3,7 +3,7 @@ import User from "../models/user.model";
 /* READ */
 export const getUser = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params;//get the id that comes of the get request
         const user = await User.findById(id);
         res.status(200).json(user);
     } catch (err) {
