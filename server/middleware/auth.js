@@ -8,7 +8,7 @@ export const verifyToken = async (req, res, nex) => {
             return res.status(403).send("Acess Denied");
         }
         if(token.startWith("Bearer ")){
-            token = token.slice(7, token.length).trimLeft();
+            token = token.slice(7, token.length).trimLeft();//formating the token string that came from the request
         }
         console.log(token)
 
@@ -16,6 +16,6 @@ export const verifyToken = async (req, res, nex) => {
         req.user = verified;
         next();
     } catch (err) {
-        res.status(500).json({error: err.message })
+        res.status(500).json({func: "verifyToken", error: err.message })
     }
 }
