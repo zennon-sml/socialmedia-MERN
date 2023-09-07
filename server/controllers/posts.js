@@ -19,7 +19,50 @@ export const createPost = async (req, res) => {
         })
         await newPost.save(); 
 
+        const post = await Post.find();
+        res.status(201).json({func: "createPost", message: post});
     } catch (err) {
         res.status(409).json({ func: createPost, message: err.message });
+    }
+}
+
+// READ
+export const getFeedPosts = async (req, res) => {
+    try {
+        const post = await Post.find();
+        res.status(200).json(post)
+    } catch( err ) {
+        res.status(404).json({ func: getFeedPosts, message: err.message })
+    }
+}
+
+export const getUserPosts = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const post = Post.findById(userId);
+        res.status(200).json(post);
+    } catch (err) {
+        res.status(404).json({ func: "getUserPosts", message: err.message })
+    }
+}
+
+// UPDATE
+export const likePost = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { userId } = req.body;
+        const post = await Post.findById(id);
+        const isLiked = post.likes.get(userId);
+        if (isLiked) {
+            post.likes.delete(userId);
+        } else {
+            post.likes.set(userId, true);
+        }
+        // get the document by the id and updates it and the new: true its for returning the updated document
+        const updatedPost = await Post.findByIdAndUpdate(id, { likes: post.likes }, { new: true });
+
+        res.status(200).json(updatedPost);
+    } catch (err) {
+        res.status(404).json({ func: "likePost", message: err.message })
     }
 }

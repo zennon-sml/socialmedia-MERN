@@ -44,7 +44,7 @@ const upload = multer({storage})//upload is a instace of multer middleware
 
 /* ROUTES WITH FILES */
 app.post("/auth/register", upload.single("picture"), register);
-app.post("/posts", verifyToken, upload.single("picture"), createPost);
+app.post("/createPosts", verifyToken, upload.single("picture"), createPost);
 
 /* ROUTES */
 app.use("/auth", authRoutes);
